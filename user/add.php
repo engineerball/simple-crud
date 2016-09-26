@@ -5,21 +5,21 @@
 
     if ( !empty($_POST)) {
         // keep track validation errors
-        $studentIDError = null;
+        $thaiIDError = null;
         $nameError = null;
         $emailError = null;
         $mobileError = null;
 
         // keep track post values
-        $studentID = $_POST['studentID'];
+        $thaiID = $_POST['thaiID'];
         $name = $_POST['name'];
         $email = $_POST['email'];
         $mobile = $_POST['mobile'];
 
         // validate input
         $valid = true;
-        if (empty($studentID)) {
-            $studentIDError = 'Please enter Student ID';
+        if (empty($thaiID)) {
+            $thaiIDError = 'Please enter Thai ID';
             $valid = false;
         }
 
@@ -49,8 +49,9 @@
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $sql = "INSERT INTO accounts (name,studentID,email,accountID,created_at) values(?, ?, ?, ?,?)";
             $q = $pdo->prepare($sql);
-            $accountID = EncryptionID($studentID);
-            $q->execute(array($name,$studentID,$email,$accountID,$created_date));
+            #$accountID = EncryptionID($thaiID);
+            $accountID = $thaiID;
+            $q->execute(array($name,$thaiID,$email,$accountID,$created_date));
 
 
             $sql = "SELECT id FROM accounts WHERE accountID = '$accountID'";
@@ -81,6 +82,56 @@
     <meta charset="utf-8">
     <link   href="../assets/css/bootstrap.min.css" rel="stylesheet">
     <script src="../assets/js/bootstrap.min.js"></script>
+    <script>
+    function check_idcard(idcard){
+      if(idcard.value == ""){ return false;}
+      if(idcard.length < 13){ return false;}
+
+      var num = str_split(idcard); // function เพิ่มเติม
+      var sum = 0;
+      var total = 0;
+      var digi = 13;
+
+      for(i=0;i<12;i++){
+        sum = sum + (num[i] * digi);
+        digi--;
+      }
+      total = ((11 - (sum % 11)) % 10);
+
+      if(total == num[12]){ //	alert('รหัสหมายเลขประจำตัวประชาชนถูกต้อง');
+      return true;
+      }else{ //	alert('รหัสหมายเลขประจำตัวประชาชนไม่ถูกต้อง');
+        return false;
+      }
+    }
+
+    function str_split ( f_string, f_split_length){
+      f_string += '';
+      if (f_split_length == undefined) {
+        f_split_length = 1;
+      }
+      if(f_split_length > 0){
+        var result = [];
+        while(f_string.length > f_split_length) {
+          result[result.length] = f_string.substring(0, f_split_length);
+          f_string = f_string.substring(f_split_length);
+        }
+        result[result.length] = f_string;
+        return result;
+      }
+      return false;
+    }
+
+    function id_card(id){
+      if(check_idcard(id.value)){
+        //alert("ID Card Completed.");
+      }else{
+        alert("ID Card Error ?\nPlease Tye Again");
+        id.value = "";
+        id.focus();
+      }
+    }
+    </script>
 </head>
 
 <body>
@@ -91,13 +142,13 @@
                         <h3>Create a account</h3>
                     </div>
 
-                    <form class="form-horizontal" action="add.php" method="post">
-                      <div class="control-group <?php echo !empty($studentIDError)?'error':'';?>">
-                        <label class="control-label">Student ID</label>
+                    <form class="form-horizontal" id="formAddUser" action="add.php" method="post">
+                      <div class="control-group <?php echo !empty($thaiIDError)?'error':'';?>">
+                        <label class="control-label">เลขบัตรประชาชน</label>
                         <div class="controls">
-                            <input name="studentID" type="text"  placeholder="Student ID" value="<?php echo !empty($studentID)?$studentID:'';?>">
-                            <?php if (!empty($studentIDError)): ?>
-                                <span class="help-inline"><?php echo $studentIDError;?></span>
+                            <input name="thaiID" id="thaiID" type="text"  placeholder="เลขบัตรประชาชน" onKeyPress="if (event.keyCode < 48 || event.keyCode > 57 ){event.returnValue = false;}" maxlength="13" value="<?php echo !empty($thaiID)?$thaiID:'';?>">
+                            <?php if (!empty($thaiIDError)): ?>
+                                <span class="help-inline"><?php echo $thaiIDError;?></span>
                             <?php endif; ?>
                         </div>
                       </div>
@@ -129,7 +180,7 @@
                         </div>
                       </div>
                       <div class="form-actions">
-                          <button type="submit" class="btn btn-success">Create</button>
+                          <button type="submit" class="btn btn-success" onClick="id_card(document.getElementById('thaiID'))">Create</button>
                           <a class="btn" href="index.php">Back</a>
                         </div>
                     </form>
