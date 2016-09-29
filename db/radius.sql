@@ -24,14 +24,17 @@ DROP TABLE IF EXISTS `accounts`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `accounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  `studentID` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  `accountID` varchar(45) NOT NULL,
+  `nameprefix` varchar(30) NOT NULL,
+  `firstname` varchar(255) NOT NULL,
+  `lastname` varchar(2555) NOT NULL,
+  `ThaiID` varchar(13) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `mobile` varchar(10) NOT NULL,
   `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +43,7 @@ CREATE TABLE `accounts` (
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` VALUES (7,'B Khunpech','483558712811','engineerball3@gmail.com','4835587128119','0000-00-00 00:00:00'),(8,'C Khunpech','483558712822','engineerball4@gmail.com','4835587128224','0000-00-00 00:00:00'),(9,'WERWR','373408476368','a@email.com','3734084763681','0000-00-00 00:00:00'),(10,'WERWR1','373408476361','a@email.com1','3734084763614','0000-00-00 00:00:00'),(14,'chani','483558111837','chani@mail.com','4835581118375','0000-00-00 00:00:00'),(16,'qweqq qwsdfwre','265504203334','sewer@mail.com','2655042033344','2016-09-01 09:25:22');
+-- INSERT INTO `accounts` VALUES (1,'B Khunpech','483558712811','engineerball3@gmail.com','4835587128119','0000-00-00 00:00:00'),(8,'C Khunpech','483558712822','engineerball4@gmail.com','4835587128224','0000-00-00 00:00:00'),(9,'WERWR','373408476368','a@email.com','3734084763681','0000-00-00 00:00:00'),(10,'WERWR1','373408476361','a@email.com1','3734084763614','0000-00-00 00:00:00'),(14,'chani','483558111837','chani@mail.com','4835581118375','0000-00-00 00:00:00'),(16,'qweqq qwsdfwre','265504203334','sewer@mail.com','2655042033344','2016-09-01 09:25:22');
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -117,7 +120,7 @@ CREATE TABLE `radcheck` (
   KEY `username` (`username`(32)),
   KEY `fk_radcheck_accounts_idx` (`accounts_id`),
   CONSTRAINT `fk_radcheck_accounts` FOREIGN KEY (`accounts_id`) REFERENCES `accounts` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -126,7 +129,7 @@ CREATE TABLE `radcheck` (
 
 LOCK TABLES `radcheck` WRITE;
 /*!40000 ALTER TABLE `radcheck` DISABLE KEYS */;
-INSERT INTO `radcheck` VALUES (8,'4835581118375','User-Password',':=','4835581118375',14),(10,'2655042033344','User-Password',':=','2655042033344',16);
+-- INSERT INTO `radcheck` VALUES (8,'4835581118375','User-Password',':=','4835581118375',14),(10,'2655042033344','User-Password',':=','2655042033344',16);
 /*!40000 ALTER TABLE `radcheck` ENABLE KEYS */;
 UNLOCK TABLES;
 

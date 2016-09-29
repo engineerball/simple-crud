@@ -10,7 +10,7 @@
     } else {
         $pdo = Database::connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "SELECT * FROM radcheck where id = ?";
+        $sql = "SELECT * FROM accounts where id = ?";
         $q = $pdo->prepare($sql);
         $q->execute(array($id));
         $data = $q->fetch(PDO::FETCH_ASSOC);
@@ -36,15 +36,39 @@
 
                     <div class="form-horizontal" >
                       <div class="control-group">
-                        <label class="control-label">Name</label>
+                        <label class="control-label">คำนำหน้า</label>
                         <div class="controls">
                             <label class="checkbox">
-                                <?php echo $data['username'];?>
+                                <?php echo $data['nameprefix'];?>
                             </label>
                         </div>
                       </div>
                       <div class="control-group">
-                        <label class="control-label">Email Address</label>
+                        <label class="control-label">ชื่อ</label>
+                        <div class="controls">
+                            <label class="checkbox">
+                                <?php echo $data['firstname'];?>
+                            </label>
+                        </div>
+                      </div>
+                      <div class="control-group">
+                        <label class="control-label">นามสกุล</label>
+                        <div class="controls">
+                            <label class="checkbox">
+                                <?php echo $data['lastname'];?>
+                            </label>
+                        </div>
+                      </div>
+                      <div class="control-group">
+                        <label class="control-label">หมายเลขบัตรประชาชน</label>
+                        <div class="controls">
+                            <label class="checkbox">
+                                <?php echo $data['ThaiID'];?>
+                            </label>
+                        </div>
+                      </div>
+                      <div class="control-group">
+                        <label class="control-label">อีเมลล์</label>
                         <div class="controls">
                             <label class="checkbox">
                                 <?php echo $data['email'];?>
@@ -52,7 +76,7 @@
                         </div>
                       </div>
                       <div class="control-group">
-                        <label class="control-label">Mobile Number</label>
+                        <label class="control-label">หมายเลขโทรศัพท์</label>
                         <div class="controls">
                             <label class="checkbox">
                                 <?php echo $data['mobile'];?>

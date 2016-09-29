@@ -18,9 +18,10 @@
                 <table class="table table-striped table-bordered">
                   <thead>
                     <tr>
-                      <th>Name</th>
-                      <th>Email Address</th>
-                      <th>Account ID</th>
+                      <th>ชื่อ</th>
+                      <th>นามสกุล</th>
+                      <th>อีเมลล์</th>
+                      <th>account</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -30,8 +31,9 @@
                    $pdo = Database::connect();
                    $sql = 'SELECT
                             accounts.id AS id,
-                            accounts.name,
-                            accounts.studentID,
+                            accounts.firstname,
+                            accounts.lastname,
+                            accounts.ThaiID,
                             accounts.email,
                             radcheck.username AS accountID
                             FROM
@@ -40,9 +42,10 @@
                             ';
                    foreach ($pdo->query($sql) as $row) {
                             echo '<tr>';
-                            echo '<td>'. $row['name'] . '</td>';
+                            echo '<td>'. $row['firstname'] . '</td>';
+                            echo '<td>'. $row['lastname'] . '</td>';
                             echo '<td>'. $row['email'] . '</td>';
-                            echo '<td>'. $row['accountID'] . '</td>';
+                            echo '<td>'. $row['ThaiID'] . '</td>';
                             echo '<td width=250>';
                             echo '<a class="btn" href="read.php?id='.$row['id'].'">Read</a>';
                             echo ' ';

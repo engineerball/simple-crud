@@ -5,26 +5,40 @@
 
     if ( !empty($_POST)) {
         // keep track validation errors
+        $nameprefixError = null;
         $thaiIDError = null;
-        $nameError = null;
+        $firstnameError = null;
+        $lastnameError = null;
         $emailError = null;
         $mobileError = null;
 
         // keep track post values
         $thaiID = $_POST['thaiID'];
-        $name = $_POST['name'];
+        $nameprefix = $_POST['nameprefix'];
+        $firstname = $_POST['firstname'];
+        $lastname = $_POST['firstname'];
         $email = $_POST['email'];
         $mobile = $_POST['mobile'];
 
         // validate input
         $valid = true;
+        if (empty($nameprefix)) {
+            $nameprefixError = 'Please enter name prefix';
+            $valid = false;
+        }
+
         if (empty($thaiID)) {
             $thaiIDError = 'Please enter Thai ID';
             $valid = false;
         }
 
-        if (empty($name)) {
-            $nameError = 'Please enter Name';
+        if (empty($firstname)) {
+            $firstnameError = 'Please enter First name';
+            $valid = false;
+        }
+
+        if (empty($lastname)) {
+            $lastnameError = 'Please enter Last name';
             $valid = false;
         }
 
@@ -47,22 +61,22 @@
             $created_date = date("Y-m-d H:i:s");
             $pdo = Database::connect();
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql = "INSERT INTO accounts (name,studentID,email,accountID,created_at) values(?, ?, ?, ?,?)";
+            $sql = "INSERT INTO accounts (nameprefix, firstname,lastname,ThaiID,email,created_at) values(?, ?, ?, ?, ?,?)";
             $q = $pdo->prepare($sql);
             #$accountID = EncryptionID($thaiID);
-            $accountID = $thaiID;
-            $q->execute(array($name,$thaiID,$email,$accountID,$created_date));
+            #$accountID = $thaiID;
+            $q->execute(array($nameprefix,$firstname,$lastname,$thaiID,$email,$created_date));
 
 
-            $sql = "SELECT id FROM accounts WHERE accountID = '$accountID'";
+            $sql = "SELECT id FROM accounts WHERE ThaiID = '$thaiID'";
             foreach ($pdo->query($sql) as $row) {
                 $accounts_id = $row['id'];
             };
 
 
             $sql = "INSERT INTO radcheck (username,attribute,op,value,accounts_id) values(?, ?, ?, ?, ?)";
-            $username = $accountID;
-            $value = $accountID;
+            $username = $thaiID;
+            $value = $thaiID;
             $attribute = "User-Password";
             $op = ":=";
             $q = $pdo->prepare($sql);
@@ -143,6 +157,19 @@
                     </div>
 
                     <form class="form-horizontal" id="formAddUser" action="add.php" method="post">
+                      <div class="control-group <?php echo !empty($nameprefixError)?'error':'';?>">
+                        <label class="control-label">คำนำหน้า</label>
+                        <div class="controls">
+                            <label class="radio-inline"><input type="radio" name="nameprefix" <?php if (isset($nameprefix) && $nameprefix=="เด็กชาย") echo "checked";?> value="เด็กชาย">เด็กชาย</label>
+                            <label class="radio-inline"><input type="radio" name="nameprefix" <?php if (isset($nameprefix) && $nameprefix=="เด็กหญิง") echo "checked";?> value="เด็กหญิง">เด็กหญิง</label>
+                            <label class="radio-inline"><input type="radio" name="nameprefix" <?php if (isset($nameprefix) && $nameprefix=="นาย") echo "checked";?> value="นาย">นาย</label>
+                            <label class="radio-inline"><input type="radio" name="nameprefix" <?php if (isset($nameprefix) && $nameprefix=="นางสาว") echo "checked";?> value="นางสาว">นางสาว</label>
+                            <label class="radio-inline"><input type="radio" name="nameprefix" <?php if (isset($nameprefix) && $nameprefix=="นาง") echo "checked";?> valuse="นาง">นาง</label>
+                            <?php if (!empty($nameprefixError)): ?>
+                                <span class="help-inline"><?php echo $nameprefixError;?></span>
+                            <?php endif; ?>
+                        </div>
+                      </div>
                       <div class="control-group <?php echo !empty($thaiIDError)?'error':'';?>">
                         <label class="control-label">เลขบัตรประชาชน</label>
                         <div class="controls">
@@ -152,17 +179,26 @@
                             <?php endif; ?>
                         </div>
                       </div>
-                      <div class="control-group <?php echo !empty($nameError)?'error':'';?>">
-                        <label class="control-label">Name</label>
+                      <div class="control-group <?php echo !empty($firstnameError)?'error':'';?>">
+                        <label class="control-label">ชื่อ</label>
                         <div class="controls">
-                            <input name="name" type="text"  placeholder="Name" value="<?php echo !empty($name)?$name:'';?>">
-                            <?php if (!empty($nameError)): ?>
-                                <span class="help-inline"><?php echo $nameError;?></span>
+                            <input name="firstname" type="text"  placeholder="First Name" value="<?php echo !empty($firstname)?$firstname:'';?>">
+                            <?php if (!empty($firstnameError)): ?>
+                                <span class="help-inline"><?php echo $firstnameError;?></span>
+                            <?php endif; ?>
+                        </div>
+                      </div>
+                      <div class="control-group <?php echo !empty($lastnameError)?'error':'';?>">
+                        <label class="control-label">นามสกุล</label>
+                        <div class="controls">
+                            <input name="lastname" type="text"  placeholder="Last Name" value="<?php echo !empty($lastname)?$lastname:'';?>">
+                            <?php if (!empty($lastnameError)): ?>
+                                <span class="help-inline"><?php echo $lastnameError;?></span>
                             <?php endif; ?>
                         </div>
                       </div>
                       <div class="control-group <?php echo !empty($emailError)?'error':'';?>">
-                        <label class="control-label">Email Address</label>
+                        <label class="control-label">อีเมลล์</label>
                         <div class="controls">
                             <input name="email" type="text" placeholder="Email Address" value="<?php echo !empty($email)?$email:'';?>">
                             <?php if (!empty($emailError)): ?>
@@ -171,7 +207,7 @@
                         </div>
                       </div>
                       <div class="control-group <?php echo !empty($mobileError)?'error':'';?>">
-                        <label class="control-label">Mobile Number</label>
+                        <label class="control-label">โทรศัพท์</label>
                         <div class="controls">
                             <input name="mobile" type="text"  placeholder="Mobile Number" value="<?php echo !empty($mobile)?$mobile:'';?>">
                             <?php if (!empty($mobileError)): ?>
