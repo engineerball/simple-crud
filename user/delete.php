@@ -1,5 +1,7 @@
 <?php
     require '../inc/database.php';
+    require '../inc/functions.php';
+    checkLogin();
     $id = 0;
 
     if ( !empty($_GET['id'])) {
