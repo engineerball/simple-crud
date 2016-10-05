@@ -278,5 +278,5 @@ CREATE TABLE `admin` (
   `password` VARCHAR(200),
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO admin (username, password) VALUES ('admin', SHA256('admin'));
+  INSERT INTO admin (username, password) VALUES ('admin', SHA256('admin'));
 -- Dump completed on 2016-09-01 11:55:08

@@ -56,13 +56,13 @@ function printSidebar(){
         </a>
       </li>
       <li>
-        <a href=\"user\">User</a>
+        <a href=\"../user\">User</a>
       </li>
       <li>
-        <a href=\"log_viewer\">Log</a>
+        <a href=\"../auth_log\">Auth Log</a>
       </li>
       <li>
-        <a href=\"#\">Overview</a>
+        <a href=\"../log_viewer\">Log</a>
       </li>
       <li>
         <a href=\"#\">Events</a>
@@ -92,10 +92,10 @@ function printSidebarMainPage(){
         <a href=\"user\">User</a>
       </li>
       <li>
-        <a href=\"#\">Shortcuts</a>
+        <a href=\"auth_log\">Auth Log</a>
       </li>
       <li>
-        <a href=\"#\">Overview</a>
+        <a href=\"log_viewer\">Log</a>
       </li>
       <li>
         <a href=\"#\">Events</a>
