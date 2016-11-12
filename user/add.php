@@ -20,7 +20,9 @@ if ( !empty($_POST)) {
   $lastname = $_POST['lastname'];
   $email = $_POST['email'];
   $mobile = $_POST['mobile'];
-  $dateofbirth = $_POST['dateofbirth'];
+  $dob_day = $_POST['dob-day'];
+  $dob_month = $_POST['dob-month'];
+  $dob_year = $_POST['dob-year'];
 
   // validate input
   $valid = true;
@@ -57,7 +59,7 @@ if ( !empty($_POST)) {
     $valid = false;
   }
 
-  if (empty($dateofbirth)) {
+  if (empty($dob_day) || empty($dob_month) || empty($dob_year)) {
     $dateofbirthError = 'Please enter Mobile Number';
     $valid = false;
   }
@@ -66,13 +68,14 @@ if ( !empty($_POST)) {
   if ($valid) {
 
     $created_date = date("Y-m-d H:i:s");
+    $dateofbirth = $dob_year . "-" . $dob_month . "-" . $dob_day;
     $pdo = Database::connect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO accounts (nameprefix, firstname,lastname,ThaiID,email,mobile,created_at) values(?, ?, ?, ?, ?,?,?)";
+    $sql = "INSERT INTO accounts (nameprefix, firstname,lastname,ThaiID,dateofbirth, email,mobile,created_at) values(?, ?, ?, ?, ?, ?, ?, ?)";
     $q = $pdo->prepare($sql);
     #$accountID = EncryptionID($thaiID);
     #$accountID = $thaiID;
-    $q->execute(array($nameprefix,$firstname,$lastname,$thaiID,$email,$mobile,$created_date));
+    $q->execute(array($nameprefix,$firstname,$lastname,$thaiID,$dateofbirth,$email,$mobile,$created_date));
 
 
     $sql = "SELECT id FROM accounts WHERE ThaiID = '$thaiID'";

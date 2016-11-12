@@ -70,6 +70,20 @@
                         </div>
                       </div>
                       <div class="control-group">
+                        <label class="control-label">วัน/เดือน/ปี เกิด</label>
+                        <div class="controls">
+                            <label class="checkbox">
+                                <?php
+					$dob = $data['dateofbirth'];
+					$from = new DateTime($dob);
+					$to = new DateTime('today');
+					$age = $from->diff($to)->y;
+					echo $dob . " (อายุ " . $age ." ปี)";
+				?>
+                            </label>
+                        </div>
+                      </div>
+                      <div class="control-group">
                         <label class="control-label">อีเมลล์</label>
                         <div class="controls">
                             <label class="checkbox">
