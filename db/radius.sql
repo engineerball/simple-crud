@@ -255,6 +255,15 @@ CREATE TABLE `radusergroup` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE `admin` (
+  id INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(100),
+  `password` VARCHAR(200),
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO admin (username, password) VALUES ('admin', SHA2('admin',256));
+
 --
 -- Dumping data for table `radusergroup`
 --
@@ -272,11 +281,4 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-CREATE TABLE `admin` (
-  id INT NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(100),
-  `password` VARCHAR(200),
-  PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-  INSERT INTO admin (username, password) VALUES ('admin', SHA256('admin'));
 -- Dump completed on 2016-09-01 11:55:08

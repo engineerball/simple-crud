@@ -126,7 +126,7 @@
                       <div class="control-group <?php echo !empty($lastnameError)?'error':'';?>">
                         <label class="control-label">Last Name</label>
                         <div class="controls">
-                            <input name="lastname" type="text"  placeholder="First Name" value="<?php echo !empty($lastname)?$lastname:'';?>">
+                            <input name="lastname" type="text"  placeholder="Last Name" value="<?php echo !empty($lastname)?$lastname:'';?>">
                             <?php if (!empty($lastnameError)): ?>
                                 <span class="help-inline"><?php echo $lastnameError;?></span>
                             <?php endif; ?>
